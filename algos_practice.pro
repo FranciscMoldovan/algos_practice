@@ -4,7 +4,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    search.cpp
+    search.cpp \
+    sort.cpp
 
 HEADERS += \
-    search.h
+    search.h \
+    sort.h
