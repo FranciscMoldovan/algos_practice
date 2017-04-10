@@ -1,3 +1,4 @@
+#include <search.h>
 size_t linear_search (int array[], int len, int key)
 {
     for (size_t i = 0; i < len; ++i)
