@@ -19,7 +19,7 @@ int main()
 
 
 //      merge(arr_s, 0, 4, 9);
-     mergeSort(arr_s, 0, 9);
+     heapSort(arr_s, 9);
       for (int var = 0; var < 9; ++var) {
         printf("arr[%d]=%d\n", var, arr_s[var]);
       }

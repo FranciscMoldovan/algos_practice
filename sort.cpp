@@ -1,5 +1,6 @@
 #include <sort.h>
 #include <string.h>
+#include <stdlib.h>
 void swap_elems (int*a, int*b)
 {
     *a ^= *b;
@@ -46,8 +47,6 @@ void bubble_sort(int array[], size_t size)
         }
     }
 }
-
-
 // Merges two subarrays of arr[]
 // First subarray is arr[l, m]
 // Second subarray is arr[m+1, r]
@@ -96,7 +95,6 @@ void merge(int arr[], int l, int m, int r)
         k++;
     }
 }
-
 void mergeSort(int arr[], int l, int r)
 {
     if (l < r)
@@ -109,11 +107,49 @@ void mergeSort(int arr[], int l, int r)
         merge(arr, l, m, r);
     }
 }
+void maxHeapify(struct MaxHeap* maxHeap, int idx)
+{
+    int largest = idx;
+    int left  = (idx << 1) + 1;// 2*i+1
+    int right = (idx +  1) << 1; // 2*i+2
+    // Check if left child exists and is greater
+    if (left < maxHeap->size && *(maxHeap->array+left) > *(maxHeap->array+largest))
+        largest = left;
+    if (right < maxHeap->size && *(maxHeap->array+right) > *(maxHeap->array+largest))
+        largest = right;
+    // Change root if needed
+    if (largest != idx)
+    {
+        swap_elems(maxHeap->array+largest, maxHeap->array+idx);
+        maxHeapify(maxHeap, largest);
+    }
+}
+struct MaxHeap* createAndBuildHeap(int *array, int size)
+{
+    int i;
+    struct MaxHeap* maxHeap = (struct MaxHeap*)malloc(sizeof(struct MaxHeap));
+    maxHeap->array = array;
+    maxHeap->size = size;
 
+    // Start from bottommost and rightmost internal node and heapify all
+    // internal nodes in bottom up way
+    for(i=(maxHeap->size-2)/2; i>=0; i--)
+        maxHeapify(maxHeap, i);
+    return maxHeap;
+}
+void heapSort(int* array, int size)
+{
+    // Build a max heap from the input data
+    struct MaxHeap* maxHeap = createAndBuildHeap(array, size);
 
+    while(maxHeap->size > 1)
+    {
+        swap_elems(maxHeap->array, maxHeap->array+maxHeap->size-1);
+        maxHeap->size--;
 
-
-
+        maxHeapify(maxHeap, 0);
+    }
+}
 
 
 
